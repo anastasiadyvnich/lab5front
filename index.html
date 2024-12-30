@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 5</title>
+    <meta name="description" content="П'ята лабораторна робота з основ фронт-енд технологій">
+    <meta name="keywords" content="Події. Регулярні вирази">
+    <style>
+        h2 {
+            text-align: center;
+        }
+        .error {
+            border: 2px solid red;
+        }
+        .success {
+            border: 2px solid green;
+        }
+        main {
+            display: flex;
+        }
+        .form {
+            padding: 10px;
+        }
+        form label {
+            display: inline-block;
+            width: 70px;
+        }
+        .inputs {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+        button {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Лабораторна робота №5</h1>
+        <h2>Завдання 1</h2>
+        <div class="form">
+            <h2>Форма для заповнення</h2>
+            <form id="validationForm">
+                <label for="fullName">ПІБ:</label>
+                <input type="text" id="fullName" placeholder="Прізвище І.Б.">
+                <br><br>
+               
+                <label for="group">Група:</label>
+                <input type="text" id="group" placeholder="AB-12">
+                <br><br>
+               
+                <label for="phone">Телефон:</label>
+                <input type="text" id="phone" placeholder="(123)-456-78-90">
+                <br><br>
+               
+                <label for="address">Адреса:</label>
+                <input type="text" id="address" placeholder="м. Київ">
+                <br><br>
+               
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" placeholder="example@mail.com">
+                <br><br>
+               
+                <button type="button" id="submitButton">Надіслати</button>
+                </form>
+        </div>
+        <div class="inputs">
+            <h2>Введені данні</h2>
+            <span class="input-name">ПІБ:</span><br>
+            <span class="input-group">Група:</span><br>
+            <span class="input-phone">Телефон:</span><br>
+            <span class="input-address">Адреса:</span><br>
+            <span class="input-email">E-mail:</span><br>
+        </div>
+    </main>
+    <script>
+        document.getElementById("submitButton").onclick = function() {
+ // Посилання на форму
+ const form = document.getElementById("validationForm");
+
+ // Поля форми
+ const fullName = document.getElementById("fullName");
+ const group = document.getElementById("group");
+ const phone = document.getElementById("phone");
+ const address = document.getElementById("address");
+ const email = document.getElementById("email");
+
+ // Регулярні вирази
+ const fullNameRegex = /^[А-ЯЁ][а-яё]+\s[А-ЯЁ]\.[А-ЯЁ]\.$/; // ПІБ: ТТТТТТ Т.Т.
+ const groupRegex = /^[А-ЯA-Z]{2}-\d{2}$/; // Група: ТТ-ЧЧ
+ const phoneRegex = /^\(\d{3}\)-\d{3}-\d{2}-\d{2}$/; // Телефон: (ЧЧЧ)-ЧЧЧ-ЧЧ-ЧЧ
+ const addressRegex = /^м\.\s[А-ЯЁа-яёA-Za-z]+$/; // Адреса: м. ЧЧЧЧЧЧ
+ const emailRegex =   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i; // E-mail: @Т_ТТТТТ
+
+ // Перевірка та підсвічування помилок
+ let isValid = true;
+
+ function validateField(field, regex) {
+ if (!regex.test(field.value)) {
+ field.classList.add("error");
+ field.classList.remove("success");
+ isValid = false;
+ } else {
+ field.classList.add("success");
+ field.classList.remove("error");
+ }
+ }
+
+ validateField(fullName, fullNameRegex);
+ validateField(group, groupRegex);
+ validateField(phone, phoneRegex);
+ validateField(address, addressRegex);
+ validateField(email, emailRegex);
+
+ // Якщо всі поля валідні
+ if (isValid) {
+    const inputName = document.querySelector('.input-name');
+ const inputGroup = document.querySelector('.input-group');
+ const inputPhone = document.querySelector('.input-phone');
+ const inputAddress = document.querySelector('.input-address');
+ const inputEmail = document.querySelector('.input-email');
+
+ // Заповнюємо елементи даними з форми
+ inputName.textContent = `ПІБ: ${fullName.value}`;
+ inputGroup.textContent = `Група: ${group.value}`;
+ inputPhone.textContent = `Телефон: ${phone.value}`;
+ inputAddress.textContent = `Адреса: ${address.value}`;
+ inputEmail.textContent = `E-mail: ${email.value}`;
+ form.reset(); // Очищення форми
+ document.querySelectorAll(".success").forEach((field) => field.classList.remove("success"));
+ } else {
+ alert("Будь ласка, виправте помилки у формі!");
+ }
+};
+    </script>
+</body>
+</html>
