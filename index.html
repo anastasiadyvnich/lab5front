@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 5</title>
+    <title>П'ята лабораторна робота</title>
     <meta name="description" content="П'ята лабораторна робота з основ фронт-енд технологій">
     <meta name="keywords" content="Події. Регулярні вирази">
     <style>
+		h1,
         h2 {
             text-align: center;
         }
@@ -16,9 +17,17 @@
         .success {
             border: 2px solid green;
         }
-        main {
+        .container {
+			width: 900px;
             display: flex;
+			margin: auto;
+			flex-direction: row;
+			justify-content: space-evenly;
         }
+		.cols {
+            display: flex;
+            flex-direction: row;
+		}
         .form {
             padding: 10px;
         }
@@ -31,59 +40,75 @@
             flex-direction: column;
             padding: 10px;
         }
+		.part-2 {
+			padding: 10px;
+			min-width: 350px;
+		}
+		.part-2 table {
+			width: 100%;
+		}
         button {
             width: 100%;
         }
+		td {
+			width: 55px;
+			height: 55px;
+			text-align: center;
+			border: 1px solid black;
+		}
     </style>
 </head>
 <body>
     <main>
         <h1>Лабораторна робота №5</h1>
-        <section id="part-1">
-        <h2>Завдання 1</h2>
-        <div class="form">
-            <h2>Форма для заповнення</h2>
-            <form id="validationForm">
-                <label for="fullName">ПІБ:</label>
-                <input type="text" id="fullName" placeholder="Прізвище І.Б.">
-                <br><br>
-               
-                <label for="group">Група:</label>
-                <input type="text" id="group" placeholder="AB-12">
-                <br><br>
-               
-                <label for="phone">Телефон:</label>
-                <input type="text" id="phone" placeholder="(123)-456-78-90">
-                <br><br>
-               
-                <label for="address">Адреса:</label>
-                <input type="text" id="address" placeholder="м. Київ">
-                <br><br>
-               
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" placeholder="example@mail.com">
-                <br><br>
-               
-                <button type="button" id="submitButton">Надіслати</button>
-                </form>
+		<div class="container">
+			<section id="part-1" class="part-1">
+				<h2>Завдання 1</h2>
+				<div class="cols">
+					<div class="form">
+						<h2>Форма для заповнення</h2>
+						<form id="validationForm">
+							<label for="fullName">ПІБ:</label>
+							<input type="text" id="fullName" placeholder="Прізвище І.Б.">
+							<br><br>
+						   
+							<label for="databd">Дата народж:</label>
+							<input type="text" id="databd" placeholder="д.м.рік">
+							<br><br>
+						   
+							<label for="address">Адреса:</label>
+							<input type="text" id="address" placeholder="м. Київ">
+							<br><br>
+						   
+							<label for="email">E-mail:</label>
+							<input type="email" id="email" placeholder="example@mail.com">
+							<br><br>
+							
+							<label for="email">Telegram:</label>
+							<input type="text" id="telegram" placeholder="@nickname">
+							<br><br>
+						   
+							<button type="button" id="submitButton">Надіслати</button>
+							</form>
+					</div>
+					<div class="inputs">
+						<h2>Введені данні</h2>
+						<span class="input-name">ПІБ:</span><br>
+						<span class="input-databd">Група:</span><br>
+						<span class="input-address">Дата народж:</span><br>
+						<span class="input-email">E-mail:</span><br>
+						<span class="input-telegram">Telegram:</span><br>
+					</div>
+				</div>
+			</section>
+			
+			<section id="part-2"  class="part-2">
+				<h2>Завдання 2</h2>
+				<table id="myTable">
+					<input type="color" id="colorPicker" style="margin: 10px 0;width:100%">
+				</table>
+			</section>
         </div>
-        <div class="inputs">
-            <h2>Введені данні</h2>
-            <span class="input-name">ПІБ:</span><br>
-            <span class="input-group">Група:</span><br>
-            <span class="input-phone">Телефон:</span><br>
-            <span class="input-address">Адреса:</span><br>
-            <span class="input-email">E-mail:</span><br>
-        </div>
-        </section>
-        
-        <section id="part-2">
-            <h2>Завдання 2</h2>
-            <table id="myTable">
-                <input type="color" id="colorPicker" style="display: none;">
-            </table>
-        </section>
-        
     </main>
     <script src="script.js"></script>
     <script>
@@ -93,17 +118,17 @@
 
  // Поля форми
  const fullName = document.getElementById("fullName");
- const group = document.getElementById("group");
- const phone = document.getElementById("phone");
+ const databd = document.getElementById("databd");
  const address = document.getElementById("address");
  const email = document.getElementById("email");
+ const telegram = document.getElementById("telegram");
 
  // Регулярні вирази
- const fullNameRegex = /^[А-ЯЁ][а-яё]+\s[А-ЯЁ]\.[А-ЯЁ]\.$/; // ПІБ: ТТТТТТ Т.Т.
- const groupRegex = /^[А-ЯA-Z]{2}-\d{2}$/; // Група: ТТ-ЧЧ
- const phoneRegex = /^\(\d{3}\)-\d{3}-\d{2}-\d{2}$/; // Телефон: (ЧЧЧ)-ЧЧЧ-ЧЧ-ЧЧ
- const addressRegex = /^м\.\s[А-ЯЁа-яёA-Za-z]+$/; // Адреса: м. ЧЧЧЧЧЧ
- const emailRegex =   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i; // E-mail: @Т_ТТТТТ
+ const fullNameRegex =  /^[A-Za-zА-Яа-яЄєІіЇїҐґ]+ [A-Za-zА-Яа-яЄєІіЇїҐґ]\.[A-Za-zА-Яа-яЄєІіЇїҐґ]\.$/;// ПІБ: ТТТТТТ Т.Т.
+ const dataRegex = /^\d{2}\.\d{2}\.\d{4}$/; // Дата народж: ЧЧ.ЧЧ.ЧЧЧЧ
+ const addressRegex = /^м\.\s[A-Za-zА-Яа-яЄєІіЇїҐґ]+$/; // Адреса: м. ЧЧЧЧЧЧ
+ const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i; // E-mail: @Т_ТТТТТ
+ const telegramRegex = /^@\w+$/i; // Telegram
 
  // Перевірка та підсвічування помилок
  let isValid = true;
@@ -120,30 +145,30 @@
  }
 
  validateField(fullName, fullNameRegex);
- validateField(group, groupRegex);
- validateField(phone, phoneRegex);
+ validateField(databd, dataRegex);
  validateField(address, addressRegex);
  validateField(email, emailRegex);
+ validateField(telegram, telegramRegex);
 
  // Якщо всі поля валідні
  if (isValid) {
     const inputName = document.querySelector('.input-name');
- const inputGroup = document.querySelector('.input-group');
- const inputPhone = document.querySelector('.input-phone');
- const inputAddress = document.querySelector('.input-address');
- const inputEmail = document.querySelector('.input-email');
+	 const inputGroup = document.querySelector('.input-databd');
+	 const inputTelegram = document.querySelector('.input-telegram');
+	 const inputAddress = document.querySelector('.input-address');
+	 const inputEmail = document.querySelector('.input-email');
 
- // Заповнюємо елементи даними з форми
- inputName.textContent = `ПІБ: ${fullName.value}`;
- inputGroup.textContent = `Група: ${group.value}`;
- inputPhone.textContent = `Телефон: ${phone.value}`;
- inputAddress.textContent = `Адреса: ${address.value}`;
- inputEmail.textContent = `E-mail: ${email.value}`;
- form.reset(); // Очищення форми
- document.querySelectorAll(".success").forEach((field) => field.classList.remove("success"));
- } else {
- alert("Будь ласка, виправте помилки у формі!");
- }
+	 // Заповнюємо елементи даними з форми
+	 inputName.textContent = `ПІБ: ${fullName.value}`;
+	 inputGroup.textContent = `Дата народж: ${databd.value}`;
+	 inputTelegram.textContent = `Telegram: ${telegram.value}`;
+	 inputAddress.textContent = `Адреса: ${address.value}`;
+	 inputEmail.textContent = `E-mail: ${email.value}`;
+	 form.reset(); // Очищення форми
+	 document.querySelectorAll(".success").forEach((field) => field.classList.remove("success"));
+	 } else {
+	 alert("Будь ласка, виправте помилки у формі!");
+	 }
 };
     </script>
 </body>
