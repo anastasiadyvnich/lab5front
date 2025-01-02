@@ -17,29 +17,36 @@ function changeCellColor(cell, color) {
 // Функція для обробки подій ячейки
 function cellHandler(event) {
   const cell = event.target;
+  const cellIndex = 6;
   const cellNumber = parseInt(cell.textContent);
 
-  switch (event.type) {
-    case 'mouseover':
-      changeCellColor(cell, getRandomColor());
-      break;
-    case 'click':
-        if (cellNumber === 13) {
-            colorPicker.style.display = 'block'; 
-            colorPicker.addEventListener('input', () => {
-              changeCellColor(cell, colorPicker.value);
-            });
-          } else {
-            colorPicker.style.display = 'none';
-          }
-      break;
-    case 'dblclick':
-      const allCells = document.querySelectorAll('td');
-      allCells.forEach(cell => {
-        changeCellColor(cell, getRandomColor());
-      });
-      break;
-  }
+	if (cellNumber === cellIndex) { 
+	  switch (event.type) {
+		case 'mouseover':
+		  changeCellColor(cell, getRandomColor());
+		  break;
+		case 'click':
+				const selectedColor = document.getElementById('colorPicker').value;
+				changeCellColor(cell, selectedColor);
+		  break;
+		case 'dblclick':
+		  const neighborIndices = getNeighborsByIndex(cellNumber-1);
+		  changeCellColor(cell, getRandomColor());
+		  if (neighborIndices.left !== null) {
+			const leftNeighbor = document.querySelectorAll('td')[neighborIndices.left];
+			changeCellColor(leftNeighbor, getRandomColor());
+		  }
+		  if (neighborIndices.bottomLeft !== null) {
+			const bottomLeft = document.querySelectorAll('td')[neighborIndices.bottomLeft];
+			changeCellColor(bottomLeft, getRandomColor());
+		  }
+		  if (neighborIndices.bottomRight !== null) {
+			const bottomRight = document.querySelectorAll('td')[neighborIndices.bottomRight];
+			changeCellColor(bottomRight, getRandomColor());
+		  }
+		  break;
+	  }
+	}
 }
 
 function createTable() {
@@ -55,5 +62,15 @@ function createTable() {
     }
   }
 }
+function getNeighborsByIndex(cellIndex) {
+  const rowIndex = Math.floor(cellIndex / 6);
+  const colIndex = cellIndex % 6;
 
+  return {
+    top: rowIndex > 0 ? rowIndex * 6 + colIndex - 6 : null,
+    left: colIndex > 0 ? rowIndex * 6 + colIndex - 1 : null,
+    bottomLeft: rowIndex < 5 ? (rowIndex + 1) * 6 + colIndex - 1 : null,
+    bottomRight: rowIndex < 5 ? (rowIndex + 1) * 6 + colIndex : null
+  };
+}
 createTable();
